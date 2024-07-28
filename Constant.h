@@ -23,6 +23,14 @@ const int PROGRESS_BAR_Y = WINDOW_HEIGHT - PROGRESS_BAR_HEIGHT - 10;
 
 
 //-----------------------------------
+//Button
+const int START_BUTTON_WIDTH = 344;
+const int START_BUTTON_HEIGHT = 100;
+const int START_BUTTON_X = (WINDOW_WIDTH - START_BUTTON_WIDTH) / 2;
+const int START_BUTTON_Y = WINDOW_HEIGHT * 3 / 4;
+
+
+//-----------------------------------
 //Card
 const int CARD_WIDTH = 300;
 const int CARD_HEIGHT = 150;

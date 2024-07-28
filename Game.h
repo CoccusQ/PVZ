@@ -15,6 +15,7 @@ public:
 	std::vector<Peashooter*> peashooter_list;
 	IMAGE background;
 	bool running = true;
+	bool is_game_start = false;
 
 public:
 	Game() {

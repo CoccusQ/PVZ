@@ -3,7 +3,6 @@
 #include <string.h>
 #include "Zombies.h"
 #include "ProgressBar.h"
-//#include "Timer.h"
 
 class ZombiesLayer {
 public:
@@ -11,7 +10,6 @@ public:
 	ProgressBar progress_bar;
 	int ratio;
 	bool is_game_end = false;
-	//std::vector<ZombieAttack*> zombie_attack_list;
 public:
 	ZombiesLayer(std::string game_level_type = "1flag", int total_wave = 10, int ratio = 1, int interval = ZOMBIE_EMERGE_INTERVAL)
 		:total_wave(total_wave), ratio(ratio), interval(interval),

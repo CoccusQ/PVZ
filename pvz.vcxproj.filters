@@ -71,7 +71,7 @@
     <ClInclude Include="ProgressBar.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="Button.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -133,6 +133,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletLayer.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardSlot.h" />
     <ClInclude Include="Constant.h" />
@@ -144,7 +145,6 @@
     <ClInclude Include="Sunflower.h" />
     <ClInclude Include="Sunlight.h" />
     <ClInclude Include="SunlightLayer.h" />
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="Transparent.h" />
     <ClInclude Include="Zombies.h" />
     <ClInclude Include="ZombiesLayer.h" />
