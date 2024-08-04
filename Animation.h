@@ -5,37 +5,58 @@
 #include <string>
 #include "Transparent.h"
 #include "Constant.h"
+#include "Atlas.h"
 
 class Animation {
 public:
-	Animation(std::string dir, int size, int num, int frame_interval) {
+	bool is_finished = false;
+public:
+	Animation() {};
+	Animation(Atlas* anim_atlas, int frame_interval) {
 		interval = frame_interval;
-		std::string path;
-		for (int i = 0; i < num; i++) {
-			path = dir + "\\" + std::to_string(i) + ".png";
-			IMAGE* frame = new IMAGE();
-			loadimage(frame, path.c_str(), size, size);
-			frame_list.push_back(frame);
-		}
+		this->atlas = anim_atlas;
 	}
-	~Animation() {
-		for (int i = 0; i < frame_list.size(); i++) {
-			delete frame_list[i];
-		}
+	~Animation() {}
+
+	void reset() {
+		timer = 0;
+		idx_frame = 0;
+	}
+
+	void set_loop(bool flag) {
+		is_loop = flag;
+	}
+
+	void set_atlas(Atlas* atlas) {
+		this->atlas = atlas;
+	}
+
+	void set_interval(int frame_interval) {
+		interval = frame_interval;
 	}
 
 	void Play(int x, int y, int delta_time) {
 		timer += delta_time;
 		if (timer >= interval) {
-			idx_frame++;
-			idx_frame %= frame_list.size();
 			timer = 0;
+			idx_frame++;
+			if (idx_frame >= atlas->frame_list.size()) {
+				if (is_loop) {
+					idx_frame = 0;
+				}
+				else {
+					idx_frame = atlas->frame_list.size() - 1;
+					is_finished = true;
+				}
+			}
 		}
-		putimage_t(x, y, frame_list[idx_frame]);
+		putimage_t(x, y, atlas->frame_list[idx_frame]);
 	}
+
 private:
 	int timer = 0;
 	int idx_frame = 0;
 	int interval;
-	std::vector<IMAGE*> frame_list;
+	bool is_loop = true;
+	Atlas* atlas;
 };

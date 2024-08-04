@@ -18,8 +18,8 @@ public:
 		setbkmode(TRANSPARENT);
 		setfillcolor(RGB(181, 242, 94));
 		setlinecolor(RGB(181, 242, 94));
-		int w = progress * (width - 30);
-		int bar_x = x + (1 - progress) * (width - 30);
+		int w = progress * (width - 15 * 1.5);
+		int bar_x = x + (1 - progress) * (width - 15 * 1.5);
 		int h = height / 3;
 		int bar_y = y + height / 3;
 		fillrectangle(bar_x, bar_y, bar_x + w, bar_y + h);

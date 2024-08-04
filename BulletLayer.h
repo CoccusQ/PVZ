@@ -7,11 +7,10 @@ class BulletLayer {
 public:
 	std::vector<Bullet*> bullet_list;
 public:
-	void Update(ZombiesLayer& zombies_layer) {
+	void Update() {
 		for (int i = 0; i < bullet_list.size(); i++) {
 			Bullet* temp = bullet_list[i];
-			temp->Move();
-			temp->Update(zombies_layer);
+			temp->Update();
 			if (temp->is_end) {
 				std::swap(bullet_list[i], bullet_list.back());
 				bullet_list.pop_back();

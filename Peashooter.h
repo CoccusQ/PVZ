@@ -1,16 +1,18 @@
 #pragma once
 #include <deque>
 #include <vector>
-#include "Constant.h"
 #include "Animation.h"
 #include "Plants.h"
 #include "BulletLayer.h"
 
+extern Atlas atlas_peashooter_idle;
+extern Atlas atlas_peashooter_shoot;
+
 class Peashooter :public Plant {
 public:
 	Peashooter(int row, int col, int x, int y)
-		:idle("pic\\plants\\peashooter\\idle", PLANT_SIZE, 3, PLANT_FRAME_INTERVAL),
-		shoot("pic\\plants\\peashooter\\shoot", PLANT_SIZE, 3, PLANT_FRAME_INTERVAL),
+		:idle(&atlas_peashooter_idle, PLANT_FRAME_INTERVAL),
+		shoot(&atlas_peashooter_shoot, PLANT_FRAME_INTERVAL),
 		Plant("peashooter", PEASHOOTER_HP, row, col, x, y) {
 		attack_interval = PLANT_FRAME_INTERVAL * 3;
 	}
@@ -32,7 +34,7 @@ public:
 	}
 
 	void AddBullet(BulletLayer &bullet_layer) {
-		Bullet* new_bullet = new Bullet("pea", PEA_DAMAGE, row, col, x + PLANT_SIZE, y + PLANT_SIZE / 4, PEA_SIZE);
+		Bullet* new_bullet = new Bullet(PEA_ID, PEA_DAMAGE, row, col, x + PLANT_SIZE, y + PLANT_SIZE / 4, PEA_SIZE);
 		bullet_layer.bullet_list.push_back(new_bullet);
 	}
 

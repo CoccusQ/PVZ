@@ -1,17 +1,19 @@
 #pragma once
 #include <deque>
-#include "Constant.h"
 #include "Animation.h"
 #include "Plants.h"
 #include "Sunlight.h"
 #include "SunlightLayer.h"
 #include "ZombiesLayer.h"
 
+extern Atlas atlas_sunflower_idle;
+extern Atlas atlas_sunflower_produce;
+
 class Sunflower :public Plant {
 public:
 	Sunflower(int row, int col, int x, int y)
-		:idle("pic\\plants\\sunflower\\idle", PLANT_SIZE, 3, PLANT_FRAME_INTERVAL),
-		produce("pic\\plants\\sunflower\\produce", PLANT_SIZE, 3, PLANT_FRAME_INTERVAL),
+		:idle(&atlas_sunflower_idle, PLANT_FRAME_INTERVAL),
+		produce(&atlas_sunflower_produce, PLANT_FRAME_INTERVAL),
 		Plant("sunflower", SUNFLOWER_HP, row, col, x, y) {
 		produce_interval = PLANT_FRAME_INTERVAL * 30;
 	}

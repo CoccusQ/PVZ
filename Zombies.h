@@ -2,6 +2,10 @@
 #include "Animation.h"
 #include "Object.h"
 
+extern Atlas atlas_zombies_walk;
+extern Atlas atlas_zombies_attack;
+extern Atlas atlas_zombies_die;
+
 class Zombie :public Object {
 public:
 	enum Status { WALK, ATTACK };
@@ -15,9 +19,9 @@ public:
 public:
 	Zombie(int hp, int damage, int row, int col, int x, int y)
 		:zombie_hp(hp), row(row), col(col), damage(damage),
-		walk("pic\\zombies\\walk", ZOMBIE_SIZE, 5, ZOMBIE_FRAME_INTERVAL),
-		attack("pic\\zombies\\attack", ZOMBIE_SIZE, 5, ZOMBIE_FRAME_INTERVAL),
-		die("pic\\zombies\\die", ZOMBIE_SIZE, 5, ZOMBIE_FRAME_INTERVAL),
+		walk(&atlas_zombies_walk, ZOMBIE_FRAME_INTERVAL),
+		attack(&atlas_zombies_attack, ZOMBIE_FRAME_INTERVAL),
+		die(&atlas_zombies_die, ZOMBIE_FRAME_INTERVAL),
 		Object(x, y, ZOMBIE_SIZE, ZOMBIE_SIZE, 30) {
 		attack_interval = ZOMBIE_FRAME_INTERVAL * 5;
 	}

@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -131,17 +131,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Atlas.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletLayer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardSlot.h" />
     <ClInclude Include="Constant.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plants.h" />
     <ClInclude Include="Peashooter.h" />
+    <ClInclude Include="PlantsLayer.h" />
     <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sunflower.h" />
     <ClInclude Include="Sunlight.h" />
     <ClInclude Include="SunlightLayer.h" />

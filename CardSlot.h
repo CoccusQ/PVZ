@@ -1,6 +1,8 @@
 #pragma once
 #include "Card.h"
-#include "Game.h"
+
+extern int mouse_x;
+extern int mouse_y;
 
 class CardSlot {
 public:
@@ -16,11 +18,18 @@ public:
 	}
 
 	void ChooseCard() {
-		Card* new_card = new Card(PEASHOOTER, PEASHOOTER_COST, PEASHOOTER_CD, cur_x, cur_y);
-		card_list.push_back(new_card);
-		cur_y += CARD_HEIGHT + 1;
-		Card *new_card1 = new Card(SUNFLOWER, SUNFLOWER_COST, SUNFLOWER_CD, cur_x, cur_y);
+		Card* new_card1 = new Card(SUNFLOWER_ID, SUNFLOWER_COST, SUNFLOWER_CD, cur_x, cur_y);
 		card_list.push_back(new_card1);
+		cur_y += CARD_HEIGHT + 1;
+		Card* new_card = new Card(PEASHOOTER_ID, PEASHOOTER_COST, PEASHOOTER_CD, cur_x, cur_y);
+		card_list.push_back(new_card);
+		
+	}
+
+	void draw_if_chosen() {
+		for (int i = 0; i < card_list.size(); i++) {
+			card_list[i]->draw_if_chosen(mouse_x, mouse_y);
+		}
 	}
 
 	void Draw() {
@@ -29,21 +38,17 @@ public:
 		}
 	}
 
-	void CoolDown(int delta_time) {
+	void Update(int delta_time) {
 		for (int i = 0; i < card_list.size(); i++) {
+			card_list[i]->on_update();
 			card_list[i]->CoolDown(delta_time);
 		}
 	}
 
-	void ProcessEvent(const ExMessage& msg, Game& game, SunlightLayer& sunlight_layer) {
+	void on_input(const ExMessage& msg) {
 		for (int i = 0; i < card_list.size(); i++) {
-			card_list[i]->ProcessEvent(msg, game, sunlight_layer);
+			card_list[i]->on_input(msg);
 		}
 	}
 
-	void ProcessEvent(int temp_x, int temp_y, SunlightLayer& sunlight_layer) {
-		for (int i = 0; i < card_list.size(); i++) {
-			card_list[i]->ProcessEvent(temp_x, temp_y, sunlight_layer);
-		}
-	}
 };

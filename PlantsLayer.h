@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <vector>
 #include <string.h>
 #include "Sunflower.h"
@@ -7,42 +6,33 @@
 #include "ZombiesLayer.h"
 
 
-class Game {
+class PlantsLayer {
 public:
 	char plants_layer[8][8];
-	char zombies_layer[8][8];
 	std::vector<Sunflower*> sunflower_list;
 	std::vector<Peashooter*> peashooter_list;
-	IMAGE background;
-	bool running = true;
-	bool is_game_start = false;
 
 public:
-	Game() {
-		loadimage(&background, "pic\\background\\background.png", WINDOW_WIDTH, WINDOW_HEIGHT);
+	PlantsLayer() {
 		memset(plants_layer, '-', sizeof(plants_layer));
-		memset(zombies_layer, '-', sizeof(zombies_layer));
 	}
 
-	~Game() {}
-
-	void AddObject(const int &id, int row, int col, int x, int y) {
+	void AddObject(const int& id, int row, int col, int x, int y) {
 		Sunflower* new_sunflower;
 		Peashooter* new_peashooter;
 		switch (id) {
-		case SUNFLOWER:
+		case SUNFLOWER_ID:
 			new_sunflower = new Sunflower(row, col, x, y);
 			sunflower_list.push_back(new_sunflower);
 			break;
-		case PEASHOOTER:
+		case PEASHOOTER_ID:
 			new_peashooter = new Peashooter(row, col, x, y);
 			peashooter_list.push_back(new_peashooter);
 			break;
 		}
 	}
 
-	void Draw(SunlightLayer& sunlight_layer, BulletLayer& bullet_layer, ZombiesLayer& zombies_layer) {
-		putimage(0, 0, &background);
+	void Draw(SunlightLayer& sunlight_layer, BulletLayer& bullet_layer) {
 		for (int i = 0; i < sunflower_list.size(); i++) {
 			sunflower_list[i]->Draw(sunlight_layer, TIME_INTERVAL);
 		}
@@ -52,11 +42,6 @@ public:
 	}
 
 	void Update(ZombiesLayer& zombies_layer) {
-		if (zombies_layer.is_game_end) {
-			running = false;
-			return;
-		}
-
 		for (int i = 0; i < sunflower_list.size(); i++) {
 			Sunflower* temp = sunflower_list[i];
 			temp->Detect(zombies_layer);

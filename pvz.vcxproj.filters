@@ -44,9 +44,6 @@
     <ClInclude Include="Card.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CardSlot.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -72,6 +69,24 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Atlas.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlantsLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,55 +4,71 @@
 #include "Object.h"
 #include "Constant.h"
 #include "ZombiesLayer.h"
+#include "Animation.h"
+
+extern ZombiesLayer zombies_layer;
+extern IMAGE img_bullet_pea;
+extern Atlas atlas_pea;
 
 class Bullet :public Object {
 public:
 	bool is_end = false;
+	bool is_hit = false;
 
 public:
-	Bullet(std::string bullet_type, int damage, int row, int col, int x, int y, int size)
+	Bullet(int bullet_type, int damage, int row, int col, int x, int y, int size)
 		:type(bullet_type), damage(damage), row(row), col(col), Object(x, y, size, size) {
-		std::string path = "pic\\bullet\\" + type + ".png";
-		loadimage(&img, path.c_str(), size, size);
+		switch (type) {
+		case PEA_ID:
+			img = &img_bullet_pea;
+			blast.set_atlas(&atlas_pea);
+			blast.set_interval(80);
+			blast.set_loop(false);
+			break;
+		}
 	}
 
-	bool Detect(ZombiesLayer &zombies_layer) {
+	void Detect() {
 		int num = zombies_layer.zombies_list.size();
 		for (int i = 0; i < num; i++) {
 			Zombie* temp = zombies_layer.zombies_list[i];
 			if (row == temp->row && is_collision(*temp)) {
-				is_end = true;	
+				is_hit = true;
 				temp->DecreaseHP(damage);
+				//std::cout << "decrease hp\n";
 			}
 		}
-		return true;
 	}
 
 	void Move() {
-		x += BULLET_SPEED;
-	}
-
-	void Blast() {
-
+		x += is_hit ? 0 : BULLET_SPEED;
 	}
 
 	void Draw() {
-		putimage_t(x, y, &img);
+		if (is_hit) {
+			blast.Play(x, y, TIME_INTERVAL);
+		}
+		else {
+			putimage_t(x, y, img);
+		}
 	}
 
-	void Update(ZombiesLayer& zombies_layer) {
+	void Update() {
+		if(!is_hit) Detect();
+		Move();
 		if (x >= WINDOW_WIDTH) {
 			is_end = true;
 		}
-		else if (Detect(zombies_layer)) {
-			Blast();
-			
+		if (is_hit && blast.is_finished) {
+			is_end = true;
+			is_hit = false;
 		}
 	}
 
 private:
-	std::string type;
+	int type;
 	int row, col;
 	int damage;
-	IMAGE img;
+	IMAGE* img;
+	Animation blast;
 };

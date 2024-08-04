@@ -32,8 +32,8 @@ public:
 		setbkmode(TRANSPARENT);
 		setfillcolor(RGB(245, 237, 174));
 		settextcolor(BLACK);
-		fillroundrect(rect.left, rect.top, rect.right, rect.bottom, 10, 10);
-		settextstyle(60, 0, _T("Î¢ÈíÑÅºÚ"));
+		fillroundrect(rect.left, rect.top, rect.right, rect.bottom, 5, 5);
+		settextstyle(45, 0, _T("Î¢ÈíÑÅºÚ"));
 		drawtext(std::to_string(total_sunlight).c_str(), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 		
 		for (int i = 0; i < sunlight_list.size(); i++) {
@@ -42,5 +42,5 @@ public:
 	}
 
 private:
-	RECT rect = { 124,20,304,100 };
+	RECT rect = { 93,15,228,75 };
 };

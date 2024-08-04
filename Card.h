@@ -2,33 +2,47 @@
 #include <string>
 #include "Object.h"
 #include "SunlightLayer.h"
+#include "PlantsLayer.h"
+
+extern SunlightLayer sunlight_layer;
+extern PlantsLayer plants_layer;
+
+//豌豆射手卡片
+extern IMAGE img_card_peashooter_cooling;
+extern IMAGE img_card_peashooter_prepared;
+extern IMAGE img_card_peashooter_plant;
+
+//向日葵卡片
+extern IMAGE img_card_sunflower_cooling;
+extern IMAGE img_card_sunflower_prepared;
+extern IMAGE img_card_sunflower_plant;
 
 class Card :public Object {
 public:
 	Card(const int id, int cost, int cd, int x, int y, int width = CARD_WIDTH, int height = CARD_HEIGHT)
 		:id(id), cost(cost), time_cd(cd), Object(x, y, width, height) {
-		std::string name;
+		//初始化图片
 		switch (id) {
-		case SUNFLOWER:
-			name = "sunflower";
+
+		//豌豆射手
+		case PEASHOOTER_ID:
+			img_prepared = &img_card_peashooter_prepared;
+			img_cooling = &img_card_peashooter_cooling;
+			img_plant = &img_card_peashooter_plant;
 			break;
-		case PEASHOOTER:
-			name = "peashooter";
+
+		//向日葵
+		case SUNFLOWER_ID:
+			img_prepared = &img_card_sunflower_prepared;
+			img_cooling = &img_card_sunflower_cooling;
+			img_plant = &img_card_sunflower_plant;
 			break;
+
 		}
-		std::string path_1 = "pic\\card\\" + name + "1.png";
-		std::string path_2 = "pic\\card\\" + name + "2.png";
-		std::string path_plant = "pic\\plants\\" + name + "\\idle\\0.png";
-		loadimage(&img_prepared, path_1.c_str(), width, height);
-		loadimage(&img_cooling, path_2.c_str(), width, height);
-		loadimage(&img_plant, path_plant.c_str(), PLANT_SIZE, PLANT_SIZE);
-		rect = { x + 20, y + 20, x + width - 20, y + width - 20 };
+		
 	}
 
-	void ProcessEvent(const ExMessage &msg, Game &game, SunlightLayer &sunlight_layer) {
-		int row = 0, col = 0;
-		int x = msg.x - PLANT_SIZE / 2, y = msg.y - PLANT_SIZE / 2;
-
+	void on_update() {
 		if (!is_sunlight_enough(sunlight_layer)) {
 			lack_of_sunlight = true;
 			return;
@@ -36,21 +50,39 @@ public:
 		else {
 			lack_of_sunlight = false;
 		}
+	}
+
+	void on_input(const ExMessage& msg) {
+		int row = 0, col = 0;
+		int x = msg.x - PLANT_SIZE / 2, y = msg.y - PLANT_SIZE / 2;
+
+		//按下鼠标左键选中卡片
+		if (is_click(msg.x, msg.y) && status == Status::PREPARED) {
+			switch (msg.message) {
+			case WM_LBUTTONDOWN:
+				if (is_sunlight_enough(sunlight_layer)) {
+					is_chosen = true;
+				}
+				break;
+			}
+		}
 
 		if (is_chosen) {
-			putimage_t(x, y, &img_plant);
-			//Add Plant
+			//按下鼠标左键种植
 			if (msg.message == WM_LBUTTONDOWN && is_in_range(msg)) {
 				
 				row = (msg.y - MAP_LEFT_Y) / BLOCK_SIZE;
 				col = (msg.x - MAP_LEFT_X) / BLOCK_SIZE;
 				x = (col) * BLOCK_SIZE + MAP_LEFT_X + (BLOCK_SIZE - PLANT_SIZE) / 2;
 				y = (row) * BLOCK_SIZE + MAP_LEFT_Y + (BLOCK_SIZE - PLANT_SIZE) / 2;
-				game.AddObject(id, row, col, x, y);
+
+				plants_layer.AddObject(id, row, col, x, y);
 				sunlight_layer.total_sunlight -= cost;
 				is_chosen = false;
 				status = Status::COOLING;
+
 			}
+			//按下鼠标右键取消选择
 			else if (msg.message == WM_RBUTTONDOWN) {
 
 				is_chosen = false;
@@ -60,34 +92,9 @@ public:
 
 		}
 
-		if (is_click(msg.x, msg.y) && status == Status::PREPARED) {\
-			switch (msg.message) {
-			case WM_LBUTTONDOWN:
-				if (is_sunlight_enough(sunlight_layer)) {
-					is_chosen = true;
-				}
-				break;
-			default:
-				break;
-			}
-		}
 	}
 
-	void ProcessEvent(int temp_x, int temp_y, SunlightLayer& sunlight_layer) {
-		if (!is_sunlight_enough(sunlight_layer)) {
-			lack_of_sunlight = true;
-			return;
-		}
-		else {
-			lack_of_sunlight = false;
-		}
-
-		int x = temp_x - PLANT_SIZE / 2, y = temp_y - PLANT_SIZE / 2;
-		if (is_chosen) {
-			putimage_t(x, y, &img_plant);
-		}
-	}
-
+	//卡片冷却
 	void CoolDown(int delta_time) {
 		if (status == Status::COOLING) {
 			timer += delta_time;
@@ -98,41 +105,28 @@ public:
 		}
 	}
 
-	/*
-	void Reminder() {
-		setbkmode(TRANSPARENT);
-		setfillcolor(RGB(245, 237, 174));
-		settextcolor(BLACK);
-		fillroundrect(rect.left, rect.top, rect.right, rect.bottom, 10, 10);
-		settextstyle(20, 0, _T("微软雅黑"));
-		drawtext("阳光不足！", &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	void draw_if_chosen(int mouse_x, int mouse_y) {
+		int xx = mouse_x - PLANT_SIZE / 2, yy = mouse_y - PLANT_SIZE / 2;
+		if (is_chosen) {
+			putimage_t(xx, yy, img_plant);
+		}
 	}
-	*/
 
 	void Draw() {
 		if (lack_of_sunlight) {
-			putimage_t(x, y, &img_cooling);
+			putimage_t(x, y, img_cooling);
 		}
 		else {
 			switch (status) {
 			case Status::PREPARED:
-				putimage_t(x, y, &img_prepared);
+				putimage_t(x, y, img_prepared);
 				break;
 			case Status::COOLING:
-				putimage_t(x, y, &img_cooling);
+				putimage_t(x, y, img_cooling);
 				break;
 			}
 		}
 
-		/*
-		if (is_remind) {
-			Reminder();
-			timer_remind += TIME_INTERVAL;
-			if (timer_remind >= 100) {
-				is_remind = false;
-			}
-		}
-		*/
 	}
 
 protected:
@@ -157,7 +151,8 @@ protected:
 	int timer_remind = 0;
 	bool is_chosen = false;
 	bool lack_of_sunlight = false;
-	IMAGE img_prepared, img_cooling, img_plant;
+	IMAGE* img_prepared;
+	IMAGE* img_cooling;
+	IMAGE* img_plant;
 	Status status = Status::PREPARED;
-	RECT rect;
 };

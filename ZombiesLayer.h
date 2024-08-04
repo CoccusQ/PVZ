@@ -57,7 +57,9 @@ public:
 
 	}
 
-	void Update() {
+	void Update(int delta_time) {
+
+		AddZombie(delta_time);
 		for (int i = 0; i < zombies_list.size(); i++) {
 			Zombie* temp = zombies_list[i];
 
