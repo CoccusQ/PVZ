@@ -89,7 +89,7 @@ void LoadImages() {
 	//º”‘ÿΩ© ¨ÕººØ
 	atlas_zombies_walk.load("pic\\zombies\\walk", ZOMBIE_SIZE, 5);
 	atlas_zombies_attack.load("pic\\zombies\\attack", ZOMBIE_SIZE, 5);
-	atlas_zombies_die.load("pic\\zombies\\die", ZOMBIE_SIZE, 5);
+	atlas_zombies_die.load("pic\\zombies\\die", ZOMBIE_SIZE, 9);
 
 }
 

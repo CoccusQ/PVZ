@@ -62,6 +62,7 @@ public:
 		AddZombie(delta_time);
 		for (int i = 0; i < zombies_list.size(); i++) {
 			Zombie* temp = zombies_list[i];
+			temp->Update();
 
 			if (temp->x + temp->width <= MAP_LEFT_X) {
 				temp->is_end = true;

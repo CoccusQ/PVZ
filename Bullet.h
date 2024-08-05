@@ -32,7 +32,7 @@ public:
 		int num = zombies_layer.zombies_list.size();
 		for (int i = 0; i < num; i++) {
 			Zombie* temp = zombies_layer.zombies_list[i];
-			if (row == temp->row && is_collision(*temp)) {
+			if (row == temp->row && temp->status != Zombie::Status::DIE && is_collision(*temp)) {
 				is_hit = true;
 				temp->DecreaseHP(damage);
 				//std::cout << "decrease hp\n";
@@ -41,7 +41,7 @@ public:
 	}
 
 	void Move() {
-		x += is_hit ? 0 : BULLET_SPEED;
+		x += BULLET_SPEED;
 	}
 
 	void Draw() {
@@ -54,8 +54,10 @@ public:
 	}
 
 	void Update() {
-		if(!is_hit) Detect();
-		Move();
+		if (!is_hit) {
+			Detect();
+			Move();
+		}
 		if (x >= WINDOW_WIDTH) {
 			is_end = true;
 		}

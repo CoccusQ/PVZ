@@ -8,7 +8,7 @@ extern Atlas atlas_zombies_die;
 
 class Zombie :public Object {
 public:
-	enum Status { WALK, ATTACK };
+	enum Status { WALK, ATTACK, DIE };
 
 public:
 	bool is_end = false;
@@ -24,6 +24,8 @@ public:
 		die(&atlas_zombies_die, ZOMBIE_FRAME_INTERVAL),
 		Object(x, y, ZOMBIE_SIZE, ZOMBIE_SIZE, 30) {
 		attack_interval = ZOMBIE_FRAME_INTERVAL * 5;
+		die.set_loop(false);
+		die.set_interval(120);
 	}
 
 	void Move() {
@@ -44,7 +46,7 @@ public:
 	void DecreaseHP(int damage) {
 		zombie_hp -= damage;
 		if (zombie_hp <= 0) {
-			is_end = true;
+			status = Status::DIE;
 		}
 	}
 
@@ -58,8 +60,15 @@ public:
 			attack.Play(x, y, delta_time);
 			Attack(delta_time);
 			break;
-		default:
+		case Status::DIE:
+			die.Play(x, y, delta_time);
 			break;
+		}
+	}
+
+	void Update() {
+		if (status == Status::DIE && die.is_finished) {
+			is_end = true;
 		}
 	}
 
