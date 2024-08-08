@@ -3,6 +3,8 @@
 
 class Scene {
 public:
+	Scene() {};
+	~Scene() {};
 	virtual void on_enter() {};
 	virtual void on_update(int delta_time) {};
 	virtual void on_draw() {};

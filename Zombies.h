@@ -28,9 +28,13 @@ public:
 		die.set_interval(120);
 	}
 
+	void set_speed(int speed) {
+		this->speed = speed;
+	}
+
 	void Move() {
-		if (count % 5 == 0) {
-			x -= ZOMBIES_SPEED;
+		if (count % 7 == 0) {
+			x -= speed;
 		}
 		count++;
 	}
@@ -53,6 +57,24 @@ public:
 	void Draw(int delta_time) {
 		switch (status) {
 		case Status::WALK:
+			walk.Draw(x, y);
+			break;
+		case Status::ATTACK:
+			attack.Draw(x, y);
+			break;
+		case Status::DIE:
+			die.Draw(x, y);
+			break;
+		}
+	}
+
+	void Update(int delta_time) {
+		if (status == Status::DIE && die.is_finished) {
+			is_end = true;
+		}
+
+		switch (status) {
+		case Status::WALK:
 			Move();
 			walk.Play(x, y, delta_time);
 			break;
@@ -64,12 +86,7 @@ public:
 			die.Play(x, y, delta_time);
 			break;
 		}
-	}
 
-	void Update() {
-		if (status == Status::DIE && die.is_finished) {
-			is_end = true;
-		}
 	}
 
 protected:
@@ -78,4 +95,5 @@ protected:
 	int attack_interval;
 	int zombie_hp;
 	int count = 0;
+	int speed = ZOMBIES_SPEED;
 };

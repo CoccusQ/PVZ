@@ -89,5 +89,21 @@
     <ClInclude Include="PlantsLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LevelScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LawnMower.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LawnMowerLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="IPix.ttf" />
+    <Font Include="PixCon.ttf" />
   </ItemGroup>
 </Project>

@@ -3,11 +3,13 @@
 
 extern Scene* menu_scene;
 extern Scene* game_scene;
+extern Scene* level_scene;
 
 class SceneManager {
 public:
 	enum SceneType {
 		Menu,
+		Level,
 		Game
 	};
 
@@ -26,6 +28,8 @@ public:
 		case SceneType::Game:
 			current_scene = game_scene;
 			break;
+		case SceneType::Level:
+			current_scene = level_scene;
 		}
 		current_scene->on_enter();
 	}

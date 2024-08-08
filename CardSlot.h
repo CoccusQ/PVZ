@@ -45,6 +45,7 @@ public:
 		}
 	}
 
+	//ÖÖÖ²Ö²Îï
 	void on_input(const ExMessage& msg) {
 		for (int i = 0; i < card_list.size(); i++) {
 			card_list[i]->on_input(msg);

@@ -139,6 +139,10 @@
     <ClInclude Include="CardSlot.h" />
     <ClInclude Include="Constant.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="LawnMower.h" />
+    <ClInclude Include="LawnMowerLayer.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelScene.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plants.h" />
@@ -153,6 +157,10 @@
     <ClInclude Include="Transparent.h" />
     <ClInclude Include="Zombies.h" />
     <ClInclude Include="ZombiesLayer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="IPix.ttf" />
+    <Font Include="PixCon.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,17 +1,29 @@
 #pragma once
 #include <iostream>
+#include "Constant.h"
 #include "Scene.h"
 #include "Button.h"
 #include "SceneManager.h"
 
 extern SceneManager scene_manager;
 extern IMAGE img_startmenu;
-extern StartButton start_btn;
+extern IMAGE img_startbutton_idle;
+extern IMAGE img_startbutton_hover;
+extern IMAGE img_startbutton_clicked;
 
 class MenuScene :public Scene {
 public:
+	MenuScene() {
+		//初始化按钮
+		start_btn.set_x(START_BUTTON_X);
+		start_btn.set_y(START_BUTTON_Y);
+		start_btn.set_width(START_BUTTON_WIDTH);
+		start_btn.set_height(START_BUTTON_HEIGHT);
+		start_btn.set_image(&img_startbutton_idle, &img_startbutton_hover, &img_startbutton_clicked);
+	}
+
 	void on_enter() {
-		std::cout << "进入主菜单\n";
+		
 	}
 
 	void on_draw() {
@@ -22,14 +34,15 @@ public:
 	void on_input(const ExMessage& msg) {
 		start_btn.ProcessEvent(msg, is_game_start);
 		if (is_game_start) {
-			scene_manager.switch_to(SceneManager::SceneType::Game);
+			scene_manager.switch_to(SceneManager::SceneType::Level);
 		}
 	}
 
 	void on_exit() {
-		std::cout << "退出主菜单\n";
+		
 	}
 
 private:
+	StartButton start_btn;
 	bool is_game_start = false;
 };

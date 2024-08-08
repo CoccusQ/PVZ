@@ -5,14 +5,16 @@
 
 class Button :public Object {
 public:
-	Button(std::string dir, int x, int y, int width, int height)
+	Button() {};
+	Button(int x, int y, int width, int height)
 		:Object(x, y, width, height) {
-		std::string path_idle = dir + "\\0.png";
-		std::string path_hover = dir + "\\1.png";
-		std::string path_clicked = dir + "\\2.png";
-		loadimage(&img_idle, path_idle.c_str(), width, height);
-		loadimage(&img_hover, path_hover.c_str(), width, height);
-		loadimage(&img_clicked, path_clicked.c_str(), width, height);
+		
+	}
+
+	void set_image(IMAGE* idle, IMAGE* hover, IMAGE* clicked) {
+		this->img_idle = idle;
+		this->img_hover = hover;
+		this->img_clicked = clicked;
 	}
 
 	void ProcessEvent(const ExMessage& msg, bool& flag) {
@@ -33,6 +35,7 @@ public:
 		case WM_LBUTTONUP:
 			if (status == Status::CLICKED) {
 				OnClick(flag);
+				status = Status::HOVER;
 			}
 		}
 	}
@@ -40,13 +43,13 @@ public:
 	void Draw() {
 		switch (status) {
 		case Status::IDLE:
-			putimage_t(x, y, &img_idle);
+			putimage_t(x, y, img_idle);
 			break;
 		case Status::HOVER:
-			putimage_t(x, y, &img_hover);
+			putimage_t(x, y, img_hover);
 			break;
 		case Status::CLICKED:
-			putimage_t(x, y, &img_clicked);
+			putimage_t(x, y, img_clicked);
 			break;
 		}
 	}
@@ -57,14 +60,17 @@ protected:
 	virtual void OnClick(bool& flag) = 0;
 
 protected:
-	IMAGE img_idle, img_hover, img_clicked;
+	IMAGE* img_idle = nullptr;
+	IMAGE* img_hover = nullptr;
+	IMAGE* img_clicked = nullptr;
 	Status status = Status::IDLE;
 };
 
 class StartButton :public Button {
 public:
-	StartButton(std::string dir, int x, int y, int width, int height)
-		:Button(dir, x, y, width, height) {
+	StartButton() {};
+	StartButton(int x, int y, int width, int height)
+		:Button(x, y, width, height) {
 
 	}
 

@@ -21,7 +21,7 @@ public:
 		int num = zombies_layer.zombies_list.size();
 		for (int i = 0; i < num; i++) {
 			Zombie* temp = zombies_layer.zombies_list[i];
-			if (row == temp->row) {
+			if (temp->status != Zombie::Status::DIE && row == temp->row) {
 				status = Status::SHOOT;	
 				if (is_collision(*temp)) {
 					temp->status = Zombie::Status::ATTACK;
@@ -38,6 +38,7 @@ public:
 		bullet_layer.bullet_list.push_back(new_bullet);
 	}
 
+	
 	void Shoot(BulletLayer &bullet_layer, int delta_time) {
 		timer += delta_time;
 		if (timer >= attack_interval) {
@@ -45,8 +46,9 @@ public:
 			timer = 0;
 		}
 	}
-
-	void Draw(BulletLayer& bullet_layer, int delta_time) {
+	
+	void Update(BulletLayer& bullet_layer, int delta_time) {
+		
 		switch (status) {
 		case Status::IDLE:
 			idle.Play(x, y, delta_time);
@@ -54,6 +56,21 @@ public:
 		case Status::SHOOT:
 			shoot.Play(x, y, delta_time);
 			Shoot(bullet_layer, delta_time);
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	void Draw(BulletLayer& bullet_layer, int delta_time) {
+		switch (status) {
+		case Status::IDLE:
+			idle.Draw(x, y);
+			break;
+		case Status::SHOOT:
+			shoot.Draw(x, y);
+			//Shoot(bullet_layer, delta_time);
 			break;
 		default:
 			break;

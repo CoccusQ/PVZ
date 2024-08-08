@@ -31,8 +31,19 @@ const int START_BUTTON_Y = WINDOW_HEIGHT * 3 / 4;
 
 
 //-----------------------------------
+//Lawn Mower
+const int LAWN_MOWER_SIZE = 45 * 1.5;
+const int LAWN_MOWER_SPEED = 5;
+
+
+//-----------------------------------
+//Level
+const int LEVEL_CARD_SIZE = 150;
+
+
+//-----------------------------------
 //Card
-const int CARD_WIDTH = 150 * 1.5;
+const int CARD_WIDTH = 83 * 1.5;
 const int CARD_HEIGHT = 75 * 1.5;
 
 
@@ -89,4 +100,4 @@ const int ZOMBIE_WAVE_INTERVAL = 5760;
 const int ZOMBIE_SIZE = 60 * 1.5;
 const int ZOMBIES_HP = 270;
 const int ZOMBIES_DAMAGE = 1;
-const int ZOMBIES_SPEED = 1;
+const int ZOMBIES_SPEED = 2;

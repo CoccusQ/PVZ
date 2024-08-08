@@ -10,6 +10,7 @@
 class Animation {
 public:
 	bool is_finished = false;
+
 public:
 	Animation() {};
 	Animation(Atlas* anim_atlas, int frame_interval) {
@@ -21,6 +22,7 @@ public:
 	void reset() {
 		timer = 0;
 		idx_frame = 0;
+		is_finished = false;
 	}
 
 	void set_loop(bool flag) {
@@ -35,8 +37,13 @@ public:
 		interval = frame_interval;
 	}
 
+	int get_frame_index() {
+		return idx_frame;
+	}
+
 	void Play(int x, int y, int delta_time) {
 		timer += delta_time;
+
 		if (timer >= interval) {
 			timer = 0;
 			idx_frame++;
@@ -50,6 +57,10 @@ public:
 				}
 			}
 		}
+		//putimage_t(x, y, atlas->frame_list[idx_frame]);
+	}
+
+	void Draw(int x, int y) {
 		putimage_t(x, y, atlas->frame_list[idx_frame]);
 	}
 

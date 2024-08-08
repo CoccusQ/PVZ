@@ -52,6 +52,7 @@ public:
 		}
 	}
 
+	//种植植物
 	void on_input(const ExMessage& msg) {
 		int row = 0, col = 0;
 		int x = msg.x - PLANT_SIZE / 2, y = msg.y - PLANT_SIZE / 2;
@@ -74,12 +75,15 @@ public:
 				row = (msg.y - MAP_LEFT_Y) / BLOCK_SIZE;
 				col = (msg.x - MAP_LEFT_X) / BLOCK_SIZE;
 				x = (col) * BLOCK_SIZE + MAP_LEFT_X + (BLOCK_SIZE - PLANT_SIZE) / 2;
-				y = (row) * BLOCK_SIZE + MAP_LEFT_Y + (BLOCK_SIZE - PLANT_SIZE) / 2;
+				y = (row)*BLOCK_SIZE + MAP_LEFT_Y + (BLOCK_SIZE - PLANT_SIZE) / 2; //- BLOCK_SIZE / 8;
 
-				plants_layer.AddObject(id, row, col, x, y);
-				sunlight_layer.total_sunlight -= cost;
-				is_chosen = false;
-				status = Status::COOLING;
+				if (plants_layer.map[row][col] == 0) {
+					plants_layer.AddObject(id, row, col, x, y);
+					plants_layer.map[row][col] = id;
+					sunlight_layer.total_sunlight -= cost;
+					is_chosen = false;
+					status = Status::COOLING;
+				}
 
 			}
 			//按下鼠标右键取消选择
@@ -115,14 +119,17 @@ public:
 	void Draw() {
 		if (lack_of_sunlight) {
 			putimage_t(x, y, img_cooling);
+			put_text();
 		}
 		else {
 			switch (status) {
 			case Status::PREPARED:
 				putimage_t(x, y, img_prepared);
+				put_text();
 				break;
 			case Status::COOLING:
 				putimage_t(x, y, img_cooling);
+				put_text();
 				break;
 			}
 		}
@@ -141,6 +148,18 @@ protected:
 
 	bool is_sunlight_enough(SunlightLayer& sunlight_layer) {
 		return sunlight_layer.total_sunlight >= cost;
+	}
+
+	void put_text() {
+		setbkmode(TRANSPARENT);
+		//settextstyle(40, 0, _T("微软雅黑"));
+		settextstyle(40, 0, _T("微软雅黑"), 0, 0, 700, false, false, false);
+		RECT r = { x + width / 3,y + height * 9 / 19, x + width * 6 / 7,y + height };
+		RECT r1 = { x + width / 3 - 2,y + height * 9 / 19 - 2, x + width * 6 / 7 - 2,y + height - 2 };
+		settextcolor(LIGHTGRAY);
+		drawtext(std::to_string(cost).c_str(), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+		settextcolor(BLACK);
+		drawtext(std::to_string(cost).c_str(), &r1, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	}
 
 protected:

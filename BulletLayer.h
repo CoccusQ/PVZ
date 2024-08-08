@@ -25,4 +25,12 @@ public:
 			bullet_list[i]->Draw();
 		}
 	}
+
+	void reset() {
+		while (bullet_list.size() > 0) {
+			Bullet* temp = bullet_list[bullet_list.size() - 1];
+			bullet_list.pop_back();
+			delete temp;
+		}
+	}
 };

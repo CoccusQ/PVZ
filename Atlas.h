@@ -10,7 +10,6 @@ public:
 public:
 	Atlas() {};
 	Atlas(std::string dir, int size, int num) {
-		std::cout << "Loading...\n";
 		std::string path;
 
 		for (int i = 0; i <= num - 1; i++) {
@@ -21,12 +20,9 @@ public:
 			frame_list.push_back(frame);
 
 		}
-
-		std::cout << "Done!\n";
 	}
 
 	void load(std::string dir, int size, int num) {
-		std::cout << "Loading...\n";
 		std::string path;
 
 		for (int i = 0; i <= num - 1; i++) {
@@ -37,8 +33,6 @@ public:
 			frame_list.push_back(frame);
 
 		}
-
-		std::cout << "Done!\n";
 	}
 	
 	~Atlas() {

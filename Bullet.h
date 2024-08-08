@@ -28,6 +28,18 @@ public:
 		}
 	}
 
+	void set_bullet_type(int bullet_type) {
+		type = bullet_type;
+		switch (type) {
+		case PEA_ID:
+			img = &img_bullet_pea;
+			blast.set_atlas(&atlas_pea);
+			blast.set_interval(80);
+			blast.set_loop(false);
+			break;
+		}
+	}
+
 	void Detect() {
 		int num = zombies_layer.zombies_list.size();
 		for (int i = 0; i < num; i++) {
@@ -46,7 +58,7 @@ public:
 
 	void Draw() {
 		if (is_hit) {
-			blast.Play(x, y, TIME_INTERVAL);
+			blast.Draw(x, y);
 		}
 		else {
 			putimage_t(x, y, img);
@@ -54,16 +66,21 @@ public:
 	}
 
 	void Update() {
+		if (x >= WINDOW_WIDTH) {
+			is_end = true;
+		}
+
 		if (!is_hit) {
 			Detect();
 			Move();
 		}
-		if (x >= WINDOW_WIDTH) {
-			is_end = true;
-		}
+
 		if (is_hit && blast.is_finished) {
 			is_end = true;
 			is_hit = false;
+		}
+		if (is_hit) {
+			blast.Play(x, y, TIME_INTERVAL);
 		}
 	}
 

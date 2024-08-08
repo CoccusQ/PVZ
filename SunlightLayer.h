@@ -5,13 +5,10 @@
 
 class SunlightLayer {
 public:
-	char map[16][16];
 	std::vector<Sunlight*> sunlight_list;
 	int total_sunlight = SUNLIGHT_INIT;
 public:
-	SunlightLayer() {
-		memset(map, '-', sizeof(map));
-	}
+	SunlightLayer() {};
 
 	void Update() {
 		for (int i = 0; i < sunlight_list.size(); i++) {
@@ -38,6 +35,15 @@ public:
 		
 		for (int i = 0; i < sunlight_list.size(); i++) {
 			sunlight_list[i]->Draw();
+		}
+	}
+
+	void reset() {
+		total_sunlight = SUNLIGHT_INIT;
+		while (sunlight_list.size() > 0) {
+			Sunlight* temp = sunlight_list[sunlight_list.size() - 1];
+			sunlight_list.pop_back();
+			delete temp;
 		}
 	}
 

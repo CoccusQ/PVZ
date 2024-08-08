@@ -15,7 +15,8 @@ public:
 		:idle(&atlas_sunflower_idle, PLANT_FRAME_INTERVAL),
 		produce(&atlas_sunflower_produce, PLANT_FRAME_INTERVAL),
 		Plant("sunflower", SUNFLOWER_HP, row, col, x, y) {
-		produce_interval = PLANT_FRAME_INTERVAL * 30;
+		produce_interval = PLANT_FRAME_INTERVAL * 27;
+		produce.set_loop(false);
 	}
 
 	void Detect(ZombiesLayer& zombies_layer) {
@@ -37,22 +38,34 @@ public:
 		sunlight_layer.sunlight_list.push_back(new_sunlight);
 	}
 
-	void Produce(SunlightLayer &sunlight_layer, int delta_time) {
-		timer += delta_time;
-		if (timer >= produce_interval) {
-			AddSunlight(sunlight_layer);
-			timer = 0;
+	void Update(SunlightLayer &sunlight_layer, int delta_time) {
+		switch (status) {
+		case Status::PRODUCE:
+			produce.Play(x, y, delta_time);
+			if (produce.is_finished) {
+				AddSunlight(sunlight_layer);
+				status = Status::IDLE;
+			}
+			break;
+		case Status::IDLE:
+			idle.Play(x, y, delta_time);
+			timer += delta_time;
+			if (timer >= produce_interval) {
+				status = Status::PRODUCE;
+				timer = 0;
+				produce.reset();
+			}
+			break;
 		}
 	}
 
-	void Draw(SunlightLayer &sunlight_layer, int delta_time) {
+	void Draw(int delta_time) {
 		switch (status) {
 		case Status::IDLE:
-			idle.Play(x, y, delta_time);
+			idle.Draw(x, y);
 			break;
 		case Status::PRODUCE:
-			produce.Play(x, y, delta_time);
-			Produce(sunlight_layer, delta_time);
+			produce.Draw(x, y);
 			break;
 		default:
 			break;
@@ -66,5 +79,5 @@ protected:
 	Animation idle, produce;
 	int timer = 0;
 	int produce_interval;
-	Status status = Status::PRODUCE;
+	Status status = Status::IDLE;
 };
