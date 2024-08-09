@@ -11,7 +11,7 @@ public:
 		
 	}
 
-	void set_image(IMAGE* idle, IMAGE* hover, IMAGE* clicked) {
+	void set_image(IMAGE* idle, IMAGE* hover = nullptr, IMAGE* clicked = nullptr) {
 		this->img_idle = idle;
 		this->img_hover = hover;
 		this->img_clicked = clicked;

@@ -9,8 +9,8 @@
 extern SceneManager scene_manager;
 extern ZombiesLayer zombies_layer;
 extern IMAGE img_select_level;
-extern IMAGE img_level_1_1_idle;
-extern IMAGE img_level_1_1_hover;
+extern IMAGE img_level_1_1;
+//extern IMAGE img_level_1_1_hover;
 //extern IMAGE img_level_1_1_clicked;
 
 class LevelScene :public Scene {
@@ -24,11 +24,12 @@ public:
 		new_level->flag_num = 1;
 		new_level->interval = ZOMBIE_EMERGE_INTERVAL;
 		new_level->ratio = 1;
-		new_level->set_image(&img_level_1_1_idle, &img_level_1_1_hover, &img_level_1_1_idle);
+		new_level->set_image(&img_level_1_1);
 		new_level->set_x(100);
 		new_level->set_y(150);
 		new_level->set_width(LEVEL_CARD_SIZE);
 		new_level->set_height(LEVEL_CARD_SIZE);
+		new_level->name = "1-1";
 		level_list.push_back(new_level);
 	}
 

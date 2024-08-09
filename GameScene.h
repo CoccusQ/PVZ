@@ -17,6 +17,8 @@ extern CardSlot card_slot;
 extern IMAGE img_game_background;
 extern IMAGE img_lose;
 extern IMAGE img_win;
+extern IMAGE img_menu;
+extern IMAGE img_dark;
 
 class GameScene :public Scene {
 public:
@@ -58,12 +60,17 @@ public:
 		sunlight_layer.Draw();
 		card_slot.draw_if_chosen();
 
+		if (is_pause) {
+			pause();
+		}
+
 		if (zombies_layer.is_lose) {
 			lose();
 		}
 		else if (zombies_layer.is_win) {
 			win();
 		}
+
 	}
 
 	void on_input(const ExMessage& msg) {
@@ -78,7 +85,7 @@ public:
 		}
 		else if (msg.message == WM_KEYUP && msg.vkcode == VK_SPACE) {
 			is_pause = is_pause ^ true;
-			std::cout << is_pause << " pause\n";
+			//std::cout << is_pause << " pause\n";
 		}
 	}
 
@@ -125,6 +132,19 @@ private:
 		drawtext(_T("You Win!"), &r1_shadow, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 		settextcolor(WHITE);
 		drawtext(_T("You Win!"), &r1, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	}
+
+	void pause() {
+		putimage_t(0, 0, &img_dark);
+		putimage_t(WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3, &img_menu);
+		setbkmode(TRANSPARENT);
+		RECT r = { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3,WINDOW_WIDTH / 3 * 2,WINDOW_HEIGHT / 9 * 4 };
+		RECT r1 = { WINDOW_WIDTH / 3 + 3, WINDOW_HEIGHT / 3 + 3,WINDOW_WIDTH / 3 * 2 + 3,WINDOW_HEIGHT / 9 * 4 + 3 };
+		settextstyle(45, 0, _T("IPix"));
+		settextcolor(BLACK);
+		drawtext(_T("Pause"), &r1, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+		settextcolor(WHITE);
+		drawtext(_T("Pause"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	}
 
 };

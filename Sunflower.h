@@ -15,7 +15,7 @@ public:
 		:idle(&atlas_sunflower_idle, PLANT_FRAME_INTERVAL),
 		produce(&atlas_sunflower_produce, PLANT_FRAME_INTERVAL),
 		Plant("sunflower", SUNFLOWER_HP, row, col, x, y) {
-		produce_interval = PLANT_FRAME_INTERVAL * 27;
+		produce_interval = PLANT_FRAME_INTERVAL * 30;
 		produce.set_loop(false);
 	}
 

@@ -40,9 +40,14 @@ IMAGE img_startbutton_idle;
 IMAGE img_startbutton_hover;
 IMAGE img_startbutton_clicked;
 
+//快捷菜单图片
+IMAGE img_menu;
+IMAGE img_dark;
+
 //关卡图片
-IMAGE img_level_1_1_idle;
-IMAGE img_level_1_1_hover;
+IMAGE img_level_1_1;
+//IMAGE img_level_1_1_idle;
+//IMAGE img_level_1_1_hover;
 //IMAGE img_level_1_1_clicked;
 
 //草坪图片
@@ -94,6 +99,8 @@ void LoadImages() {
 	loadimage(&img_select_level, "pic\\background\\select_level.png", WINDOW_WIDTH, WINDOW_HEIGHT); //选择关卡背景图
 	loadimage(&img_lose, "pic\\background\\lose.png", WINDOW_WIDTH, WINDOW_HEIGHT);  //失败界面图
 	loadimage(&img_win, "pic\\background\\win.png", WINDOW_WIDTH, WINDOW_HEIGHT);  //成功背景图
+	loadimage(&img_menu, "pic\\background\\menu.png", WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3);  //快捷菜单图片
+	loadimage(&img_dark, "pic\\background\\dark_layer.png", WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//加载开始按钮
 	loadimage(&img_startbutton_idle, "pic\\button\\startbutton\\0.png", START_BUTTON_WIDTH, START_BUTTON_HEIGHT);
@@ -101,8 +108,9 @@ void LoadImages() {
 	loadimage(&img_startbutton_clicked, "pic\\button\\startbutton\\2.png", START_BUTTON_WIDTH, START_BUTTON_HEIGHT);
 
 	//加载关卡图片
-	loadimage(&img_level_1_1_idle, "pic\\level\\1-1\\0.png", LEVEL_CARD_SIZE, LEVEL_CARD_SIZE);
-	loadimage(&img_level_1_1_hover, "pic\\level\\1-1\\1.png", LEVEL_CARD_SIZE, LEVEL_CARD_SIZE);
+	loadimage(&img_level_1_1, "pic\\level\\1-1.png", LEVEL_CARD_SIZE, LEVEL_CARD_SIZE);
+	//loadimage(&img_level_1_1_idle, "pic\\level\\1-1\\0.png", LEVEL_CARD_SIZE, LEVEL_CARD_SIZE);
+	//loadimage(&img_level_1_1_hover, "pic\\level\\1-1\\1.png", LEVEL_CARD_SIZE, LEVEL_CARD_SIZE);
 	//loadimage(&img_level_1_1_clicked, "pic\\level\\1-1\\2.png", LEVEL_CARD_SIZE, LEVEL_CARD_SIZE);
 
 	//加载小推车图片
